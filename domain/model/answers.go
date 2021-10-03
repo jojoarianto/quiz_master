@@ -7,5 +7,6 @@ import (
 // Answer is data structure for answer entity
 type Answer struct {
 	gorm.Model
-	Answer int `validate:"required" gorm:"type:varchar(100);unique_index" json:"Answer"`
+	Answer     int `validate:"required" gorm:"type:varchar(100);unique_index" json:"Answer"`
+	QuestionId int `validate:"required" gorm:"type:integer" json:"QuestionId"`
 }

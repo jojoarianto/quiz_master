@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/jojoarianto/quiz_master/interface/cli/handler"
 )
 
 func main() {
@@ -31,6 +33,8 @@ func CommandRouter(cmdStr string) error {
 	arrCommandStr := strings.Fields(cmdStr)
 
 	switch arrCommandStr[0] {
+	case "create_question":
+		handler.AddQuestionHandler(cmdStr)
 	case "help":
 		fmt.Println("Command | Description")
 		fmt.Println("create_question <no> <question> <answer> | Creates a question")
@@ -43,4 +47,8 @@ func CommandRouter(cmdStr string) error {
 	}
 
 	return nil
+}
+
+func AddCQue() {
+
 }

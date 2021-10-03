@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	conf := config.NewConfig("sqlite3", "quiz_master.sqlite3")
+	conf := config.NewConfig(config.Dialeg, config.URIDbConn)
 	db, _ := conf.ConnectDB()
 
 	DBMigrate(db)
