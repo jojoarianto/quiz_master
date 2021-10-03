@@ -1,6 +1,8 @@
 package model
 
-import "errors"
+import (
+	"errors"
+)
 
 var (
 	// ErrInternalServerError will throw if any the Internal Server Error happen
@@ -11,4 +13,7 @@ var (
 
 	// ErrQuestionAlreadyExist will throw message question number already exist
 	ErrQuestionAlreadyExist = errors.New("Question number already exist")
+
+	// ErrQuestionNotFound throw error when qustion not found
+	ErrQuestionNotFound = errors.New("Question not found")
 )

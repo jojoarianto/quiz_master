@@ -44,7 +44,7 @@ func AddQuestionHandler(cmdStr string) {
 
 	// if not error
 	if err == nil {
-		fmt.Println("Question no 2 created:")
+		fmt.Printf("Question no %d created\n", number)
 		return
 	}
 
@@ -56,4 +56,40 @@ func AddQuestionHandler(cmdStr string) {
 	}
 
 	return
+}
+
+func DeleteQuestionHandler(cmdStr string) {
+	arrCommandStr := helper.StringSplitter(cmdStr)
+	if len(arrCommandStr) < 2 {
+		fmt.Println("invalid input")
+		return
+	}
+
+	number, err := strconv.Atoi(arrCommandStr[1])
+	if err != nil {
+		fmt.Println("number must be integer")
+		return
+	}
+
+	conf := config.NewConfig(config.Dialeg, config.URIDbConn)
+	db, err := conf.ConnectDB()
+	if err != nil {
+		fmt.Println(model.ErrInternalServerError.Error())
+		return
+	}
+	defer db.Close()
+
+	questionSvc := service.NewQuestionService(sqlite3.NewQuestionRepo(db))
+	err = questionSvc.Delete(number)
+	if err != nil {
+		// if err == model.ErrQuestionNotFound {
+		fmt.Println(err.Error())
+		// } else {
+		// 	fmt.Println("Fail to delete question")
+		// }
+
+		return
+	}
+
+	fmt.Printf("Question no %d was deleted!\n", number)
 }

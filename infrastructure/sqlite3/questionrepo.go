@@ -25,11 +25,20 @@ func (qr *questionRepo) Add(question model.Question) error {
 }
 
 // Add method to add new question
-func (qr *questionRepo) GetByNumber(number int) (question model.Question, x error) {
-	err := qr.Conn.Where("number = ?", number).First(&question)
+func (qr *questionRepo) GetByNumber(number int) (question model.Question, err error) {
+	err = qr.Conn.Where("number = ?", number).First(&question).Error
 	if err != nil {
 		return
 	}
 
 	return
+}
+
+// Delete method to delete a question
+func (qr *questionRepo) Delete(number int) error {
+	if err := qr.Conn.Where("number = ?", number).Delete(model.Question{}).Error; err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -33,3 +33,22 @@ func (ps *questionService) Add(question model.Question) error {
 	}
 	return nil
 }
+
+// Delete question service to delete a data of question
+func (ps *questionService) Delete(number int) error {
+	questionExist, err := ps.questionRepo.GetByNumber(number)
+	if err != nil {
+		return err
+	}
+
+	if questionExist.ID == 0 {
+		return model.ErrQuestionNotFound
+	}
+
+	err = ps.questionRepo.Delete(number)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

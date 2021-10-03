@@ -35,6 +35,8 @@ func CommandRouter(cmdStr string) error {
 	switch arrCommandStr[0] {
 	case "create_question":
 		handler.AddQuestionHandler(cmdStr)
+	case "delete_question":
+		handler.DeleteQuestionHandler(cmdStr)
 	case "help":
 		fmt.Println("Command | Description")
 		fmt.Println("create_question <no> <question> <answer> | Creates a question")
