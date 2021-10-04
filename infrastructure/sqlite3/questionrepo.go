@@ -50,3 +50,17 @@ func (qr *questionRepo) Delete(number int) error {
 
 	return nil
 }
+
+func (qr *questionRepo) Update(number int, question model.Question) error {
+	if err := qr.Conn.Model(&question).Where("number = ?", number).Updates(
+		model.Question{
+			Number:   number,
+			Question: question.Question,
+			Answer:   question.Answer,
+		},
+	).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

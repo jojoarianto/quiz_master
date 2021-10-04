@@ -77,3 +77,21 @@ func (ps *questionService) Delete(number int) error {
 
 	return nil
 }
+
+func (ps *questionService) Update(number int, newQuestion model.Question) error {
+	existingQuestion, err := ps.questionRepo.GetByNumber(number)
+	if err != nil {
+		return err
+	}
+
+	if existingQuestion.ID == 0 {
+		return model.ErrQuestionNotFound
+	}
+
+	err = ps.questionRepo.Update(number, newQuestion)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

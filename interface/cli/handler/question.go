@@ -96,6 +96,7 @@ func AddQuestionHandler(cmdStr string) {
 	err = questionSvc.Add(question)
 	if err != nil {
 		fmt.Println(err.Error())
+		return
 	}
 
 	fmt.Printf("Question no %d created\n", number)
@@ -130,4 +131,43 @@ func DeleteQuestionHandler(cmdStr string) {
 	}
 
 	fmt.Printf("Question no %d was deleted!\n", number)
+}
+
+func UpdateQuestionHandler(cmdStr string) {
+	arrCommandStr := helper.StringSplitter(cmdStr)
+	if len(arrCommandStr) < 4 {
+		fmt.Println("invalid input")
+		return
+	}
+
+	number, err := strconv.Atoi(arrCommandStr[1])
+	if err != nil {
+		fmt.Println("number must be integer")
+		return
+	}
+
+	conf := config.NewConfig(config.Dialeg, config.URIDbConn)
+	db, err := conf.ConnectDB()
+	if err != nil {
+		fmt.Println(model.ErrInternalServerError.Error())
+		return
+	}
+	defer db.Close()
+
+	question := model.Question{
+		Question: helper.RemoveQuotes(arrCommandStr[2]),
+		Number:   number,
+		Answer:   arrCommandStr[3],
+	}
+
+	// Todo: validate input
+
+	questionSvc := service.NewQuestionService(sqlite3.NewQuestionRepo(db))
+	err = questionSvc.Update(number, question)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	fmt.Printf("Question no %d updated\n", number)
 }
