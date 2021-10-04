@@ -1,6 +1,9 @@
 package service
 
 import (
+	"errors"
+
+	"github.com/jinzhu/gorm"
 	"github.com/jojoarianto/quiz_master/domain/model"
 	"github.com/jojoarianto/quiz_master/domain/repository"
 )
@@ -16,11 +19,23 @@ func NewQuestionService(questionRepo repository.QuestionRepo) *questionService {
 	}
 }
 
+// Get question to retrieve a data of a question
+func (ps *questionService) GetByNumber(number int) (question model.Question, err error) {
+	question, err = ps.questionRepo.GetByNumber(number)
+	if err != nil {
+		return
+	}
+
+	return
+}
+
 // Add question service to save a data of question
 func (ps *questionService) Add(question model.Question) error {
 	questionExist, err := ps.questionRepo.GetByNumber(question.Number)
 	if err != nil {
-		return err
+		if errors.Is(err, gorm.ErrRecordNotFound) == false {
+			return err
+		}
 	}
 
 	if questionExist.ID != 0 {

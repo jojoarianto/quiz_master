@@ -28,3 +28,27 @@ func TestStringSplitter(t *testing.T) {
 		})
 	}
 }
+
+func Test_removeQuotes(t *testing.T) {
+	type args struct {
+		str string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "Scenario 1",
+			args: args{str: "\"How many letter are in the English alphabet\""},
+			want: "How many letter are in the English alphabet",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := RemoveQuotes(tt.args.str); got != tt.want {
+				t.Errorf("removeQuotes() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

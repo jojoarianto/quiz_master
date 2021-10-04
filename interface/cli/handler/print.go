@@ -6,7 +6,9 @@ import (
 	"github.com/jojoarianto/quiz_master/domain/model"
 )
 
-func PrintQuestion(model.Question) {
-	fmt.Println("Q: ")
-	fmt.Println("A: ")
+func PrintQuestion(question model.Question) {
+	fmt.Printf("Q: %s", question.Question)
+	fmt.Println()
+	fmt.Printf("A: %s", question.Answer)
+	fmt.Println()
 }
