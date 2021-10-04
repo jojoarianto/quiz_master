@@ -39,7 +39,8 @@ func ShowQuestionHandler(cmdStr string) {
 		return
 	}
 
-	PrintQuestion(question)
+	result := BuildViewQuestion(question)
+	fmt.Println(result)
 }
 
 func AddQuestionHandler(cmdStr string) {

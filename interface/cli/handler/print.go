@@ -6,9 +6,7 @@ import (
 	"github.com/jojoarianto/quiz_master/domain/model"
 )
 
-func PrintQuestion(question model.Question) {
-	fmt.Printf("Q: %s", question.Question)
-	fmt.Println()
-	fmt.Printf("A: %s", question.Answer)
-	fmt.Println()
+func BuildViewQuestion(question model.Question) string {
+	str := fmt.Sprintf("Q: %s\nA: %s", question.Question, question.Answer)
+	return str
 }

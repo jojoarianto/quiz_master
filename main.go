@@ -48,8 +48,11 @@ func CommandRouter(cmdStr string) error {
 		fmt.Println("questions | Shows question list")
 	case "exit":
 		os.Exit(0)
+	default:
+		fmt.Println("Command not found, type \"help\" if you want to see available command")
 	}
 
+	fmt.Println()
 	return nil
 }
 
