@@ -19,3 +19,14 @@ func BuildViewAllQuestion(questions []model.Question) string {
 	}
 	return str
 }
+
+func BuildHelpMenu() string {
+	str := "Command | Description\n" +
+		"create_question <no> <question> <answer> | Creates a question\n" +
+		"update_question <no> <question> <answer> | Updates a question\n" +
+		"delete_question <no> | Deletes a question\n" +
+		"question <no> | Shows a question\n" +
+		"questions | Shows question list"
+
+	return str
+}

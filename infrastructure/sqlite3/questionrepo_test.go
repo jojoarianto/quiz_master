@@ -67,7 +67,7 @@ func Test_questionRepo_Update(t *testing.T) {
 		err = repo.Update(1, newQuestion)
 		assert.NoError(t, err)
 
-		// check number 1 must update as newQuestion object
+		// check number 1 must update as new question object
 		resultQuestion, err := repo.GetByNumber(1)
 		assert.NoError(t, err)
 		assert.Equal(t, newQuestion.Question, resultQuestion.Question)

@@ -46,12 +46,7 @@ func CommandRouter(cmdStr string) error {
 	case "delete_question":
 		handler.DeleteQuestionHandler(cmdStr)
 	case "help":
-		fmt.Println("Command | Description")
-		fmt.Println("create_question <no> <question> <answer> | Creates a question")
-		fmt.Println("update_question <no> <question> <answer> | Updates a question")
-		fmt.Println("delete_question <no> | Deletes a question")
-		fmt.Println("question <no> | Shows a question")
-		fmt.Println("questions | Shows question list")
+		fmt.Println(handler.BuildHelpMenu())
 	case "exit":
 		os.Exit(0)
 	default:

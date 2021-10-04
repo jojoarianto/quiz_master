@@ -70,3 +70,26 @@ func TestBuildViewAllQuestion(t *testing.T) {
 		})
 	}
 }
+
+func TestBuildHelpMenu(t *testing.T) {
+	tests := []struct {
+		name string
+		want string
+	}{
+		{
+			want: "Command | Description\n" +
+				"create_question <no> <question> <answer> | Creates a question\n" +
+				"update_question <no> <question> <answer> | Updates a question\n" +
+				"delete_question <no> | Deletes a question\n" +
+				"question <no> | Shows a question\n" +
+				"questions | Shows question list",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := BuildHelpMenu(); got != tt.want {
+				t.Errorf("BuildHelpMenu() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

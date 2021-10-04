@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -83,6 +82,7 @@ func (ps *questionService) Delete(number int) error {
 	return nil
 }
 
+// Update question to update data question
 func (ps *questionService) Update(number int, newQuestion model.Question) error {
 	existingQuestion, err := ps.questionRepo.GetByNumber(number)
 	if err != nil {
@@ -126,7 +126,6 @@ func (ps *questionService) Answer(number int, userAnswer string) (bool, error) {
 
 	// if integer then convert it to word in case user answer question with word
 	if isQuestionAnswerInt == true {
-		fmt.Println("heeeer2")
 
 		// convert to int
 		answerInInt, _ := strconv.Atoi(question.Answer)
