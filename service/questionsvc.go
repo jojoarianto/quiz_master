@@ -2,10 +2,15 @@ package service
 
 import (
 	"errors"
+	"fmt"
+	"strconv"
+	"strings"
 
+	"github.com/divan/num2words"
 	"github.com/jinzhu/gorm"
 	"github.com/jojoarianto/quiz_master/domain/model"
 	"github.com/jojoarianto/quiz_master/domain/repository"
+	"github.com/jojoarianto/quiz_master/helper"
 )
 
 type questionService struct {
@@ -94,4 +99,48 @@ func (ps *questionService) Update(number int, newQuestion model.Question) error 
 	}
 
 	return nil
+}
+
+// Answer question to answer of question will return correct or in correct
+func (ps *questionService) Answer(number int, userAnswer string) (bool, error) {
+	question, err := ps.questionRepo.GetByNumber(number)
+	if err != nil {
+		return false, err
+	}
+
+	if question.ID == 0 {
+		return false, model.ErrQuestionNotFound
+	}
+
+	// to lower case
+	userAnswer = strings.ToLower(userAnswer)
+	userAnswer = helper.RemoveQuotes(userAnswer)
+
+	// simple comparison checking
+	if userAnswer == strings.ToLower(question.Answer) {
+		return true, nil
+	}
+
+	// state to check question.answer is int or not
+	isQuestionAnswerInt := helper.IsEligibleConvertToInteger(question.Answer)
+
+	// if integer then convert it to word in case user answer question with word
+	if isQuestionAnswerInt == true {
+		fmt.Println("heeeer2")
+
+		// convert to int
+		answerInInt, _ := strconv.Atoi(question.Answer)
+		answerInWord := num2words.Convert(answerInInt)
+
+		// convert - to space (tweenty-six to tweenty six)
+		answerInWord = strings.Replace(answerInWord, "-", " ", -1)
+
+		// compare answer with question.answer in word
+		if strings.ToLower(answerInWord) == userAnswer {
+			return true, nil
+		}
+
+	}
+
+	return false, nil
 }

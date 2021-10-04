@@ -9,4 +9,5 @@ type QuestionService interface {
 	Update(number int, question model.Question) error
 	GetAll() (question []model.Question, err error)
 	GetByNumber(number int) (question model.Question, err error)
+	Answer(number int, answer string) (isCorrect bool, err error)
 }

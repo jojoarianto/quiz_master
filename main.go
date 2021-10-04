@@ -37,6 +37,8 @@ func CommandRouter(cmdStr string) error {
 		handler.ShowAllQuestionHandler()
 	case "question":
 		handler.ShowQuestionHandler(cmdStr)
+	case "answer_question":
+		handler.AnswerQuestionHandler(cmdStr)
 	case "create_question":
 		handler.AddQuestionHandler(cmdStr)
 	case "update_question":

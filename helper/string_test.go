@@ -52,3 +52,42 @@ func Test_removeQuotes(t *testing.T) {
 		})
 	}
 }
+
+func TestIsEligibleConvertToInteger(t *testing.T) {
+	type args struct {
+		str string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			args: args{str: "76"},
+			want: true,
+		},
+		{
+			args: args{str: "Tujuh Enam"},
+			want: false,
+		},
+		{
+			args: args{str: "Name of person"},
+			want: false,
+		},
+		{
+			args: args{str: "123556"},
+			want: true,
+		},
+		{
+			args: args{str: "123H56"},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := IsEligibleConvertToInteger(tt.args.str); got != tt.want {
+				t.Errorf("IsEligibleConvertToInteger() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
