@@ -33,6 +33,8 @@ func CommandRouter(cmdStr string) error {
 	arrCommandStr := strings.Fields(cmdStr)
 
 	switch arrCommandStr[0] {
+	case "questions":
+		handler.ShowAllQuestionHandler()
 	case "question":
 		handler.ShowQuestionHandler(cmdStr)
 	case "create_question":

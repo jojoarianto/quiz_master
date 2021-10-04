@@ -24,13 +24,21 @@ func (qr *questionRepo) Add(question model.Question) error {
 	return nil
 }
 
-// Add method to add new question
+// GetByNumber to get single question by number
 func (qr *questionRepo) GetByNumber(number int) (question model.Question, err error) {
 	err = qr.Conn.Where("number = ?", number).First(&question).Error
 	if err != nil {
 		return
 	}
 
+	return
+}
+
+// Add method to get all question
+func (qr *questionRepo) GetAll() (questions []model.Question, err error) {
+	if err = qr.Conn.Order("number asc").Find(&questions).Error; err != nil {
+		return
+	}
 	return
 }
 

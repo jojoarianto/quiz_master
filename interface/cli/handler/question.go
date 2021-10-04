@@ -11,6 +11,26 @@ import (
 	"github.com/jojoarianto/quiz_master/service"
 )
 
+func ShowAllQuestionHandler() {
+	conf := config.NewConfig(config.Dialeg, config.URIDbConn)
+	db, err := conf.ConnectDB()
+	if err != nil {
+		fmt.Println(model.ErrInternalServerError.Error())
+		return
+	}
+	defer db.Close()
+
+	questionSvc := service.NewQuestionService(sqlite3.NewQuestionRepo(db))
+	questions, err := questionSvc.GetAll()
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	result := BuildViewAllQuestion(questions)
+	fmt.Println(result)
+}
+
 func ShowQuestionHandler(cmdStr string) {
 	arrCommandStr := helper.StringSplitter(cmdStr)
 	if len(arrCommandStr) < 2 {

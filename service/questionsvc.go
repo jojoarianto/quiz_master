@@ -19,6 +19,16 @@ func NewQuestionService(questionRepo repository.QuestionRepo) *questionService {
 	}
 }
 
+// Get all question to retrieve a data of all question
+func (ps *questionService) GetAll() (question []model.Question, err error) {
+	question, err = ps.questionRepo.GetAll()
+	if err != nil {
+		return
+	}
+
+	return
+}
+
 // Get question to retrieve a data of a question
 func (ps *questionService) GetByNumber(number int) (question model.Question, err error) {
 	question, err = ps.questionRepo.GetByNumber(number)
