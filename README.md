@@ -12,7 +12,7 @@ bin/setup
 run shell app
 
 ```bash
-bin/main
+bin/quiz_master
 ```
 
 ### project structure
