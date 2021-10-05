@@ -1,0 +1,25 @@
+# compile/install golang app shell
+
+# download dependencies
+echo ">> download dependencies ...."
+go mod download
+echo ">> download dependencies done"
+
+# run test
+echo ">> run testing ...."
+go test ./...
+echo ">> run testing done"
+
+# re run migration
+echo ">> run migration ...."
+go run interface/cli/migration/main.go
+echo ">> run migration done"
+
+# run compile to binary
+echo ">> run build ...."
+go build -o bin/quiz_master main.go
+echo ">> run build done"
+
+# ready to run
+echo ">> now you can run app with"
+echo ">> $ bin/quiz_master"
