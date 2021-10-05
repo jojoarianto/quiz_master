@@ -6,6 +6,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/jinzhu/gorm"
+	"github.com/jojoarianto/quiz_master/config"
 	"github.com/jojoarianto/quiz_master/interface/cli/handler"
 )
 
@@ -22,29 +24,46 @@ func main() {
 			// for handling empty command
 			continue
 		}
-		err = CommandRouter(cmdString)
+		err = Run(cmdString)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 		}
 	}
 }
 
-func CommandRouter(cmdStr string) error {
+func Run(cmdStr string) error {
+
+	// init database
+	conf := config.NewConfig(config.Dialeg, config.URIDbConn)
+	db, err := conf.ConnectDB()
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	// routing command
+	CommandRouter(db, cmdStr)
+
+	return nil
+}
+
+func CommandRouter(db *gorm.DB, cmdStr string) {
+	cliHandler := handler.NewCliHandler(db)
 	arrCommandStr := strings.Fields(cmdStr)
 
 	switch arrCommandStr[0] {
 	case "questions":
-		handler.ShowAllQuestionHandler()
+		cliHandler.ShowAllQuestionHandler()
 	case "question":
-		handler.ShowQuestionHandler(cmdStr)
+		cliHandler.ShowQuestionHandler(cmdStr)
 	case "answer_question":
-		handler.AnswerQuestionHandler(cmdStr)
+		cliHandler.AnswerQuestionHandler(cmdStr)
 	case "create_question":
-		handler.AddQuestionHandler(cmdStr)
+		cliHandler.AddQuestionHandler(cmdStr)
 	case "update_question":
-		handler.UpdateQuestionHandler(cmdStr)
+		cliHandler.UpdateQuestionHandler(cmdStr)
 	case "delete_question":
-		handler.DeleteQuestionHandler(cmdStr)
+		cliHandler.DeleteQuestionHandler(cmdStr)
 	case "help":
 		fmt.Println(handler.BuildHelpMenu())
 	case "exit":
@@ -54,9 +73,4 @@ func CommandRouter(cmdStr string) error {
 	}
 
 	fmt.Println()
-	return nil
-}
-
-func AddCQue() {
-
 }

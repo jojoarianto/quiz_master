@@ -108,10 +108,6 @@ func (ps *questionService) Answer(number int, userAnswer string) (bool, error) {
 		return false, err
 	}
 
-	if question.ID == 0 {
-		return false, model.ErrQuestionNotFound
-	}
-
 	// to lower case
 	userAnswer = strings.ToLower(userAnswer)
 	userAnswer = helper.RemoveQuotes(userAnswer)
